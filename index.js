@@ -14,16 +14,21 @@ program.enablePositionalOptions();
 // 配置命令行参数
 program
 .name(config.pkg.name)
-.requiredOption('-i, --input <path>', 'To be copied source path')
-.requiredOption('-d, --destination-path <path>', 'verdaccio storage directory')
+.option('-i, --input <path>', 'To be copied source path')
+.option('-d, --destination-path <path>', 'verdaccio storage directory')
 .option('-j, --verdaccio-db-json-path [path]', `Path where file ${config.verdaccioDataName} is located`)
 .option('-s, --save', 'Output the obtained package name')
 .version(config.logo, '-v', 'View current version')
 .description(chalk.magenta(`=================================================\n>>>>> ${config.pkg.description} <<<<<< \n=================================================`))
 .action(async options => {
+    // if (!options.input || !options.destinationPath) {
+    //     console.error(chalk.red('Error: Both input (-i) and destination (-d) paths are required for main command'));
+    //     console.error(chalk.yellow('Usage: sptv-cli -i <source> -d <destination> [options]'));
+    //     process.exit(1);
+    // }
+    
     config.inputPath = options.input;
     config.verdaccioStorageJsonPath = options.verdaccioDbJsonPath || options.destinationPath;
-
 
     // 复制包到verdaccio storage
     copyPackages(options.input, options.destinationPath);
@@ -32,20 +37,38 @@ program
     const packageArr = getAllPackagesName(config.inputPath, options.save);
 
     // 同步包到verdaccio storage
-    syncPackages(config.verdaccioStorageJsonPath, packageArr);
+    syncPackages(packageArr);
 });
 
 // 拷贝某目录到目标目录
-const copyDirCommand = new Command('copy-dir')
+program
+.command('copy')
 .description('Copy directory')
-.requiredOption('-i, --input <path>', 'To be copied source path')
-.requiredOption('-d, --destination-path <path>', 'Destination directory')
-.action(async function (options) {
+.argument('<input>', 'To be copied source path')
+.argument('<destination>', 'Destination directory')
+.action(async function (input, destination) {
     // 复制文件夹
-    copyPackages(options.input, options.destinationPath);
+    copyPackages(input, destination);
 });
 
-program.addCommand(copyDirCommand);
+// 同步包到 verdaccio
+program
+.command('sync')
+.description('Sync packages to verdaccio')
+.argument('<input>', 'Source directory containing packages')
+.argument('<verdaccio-path>', 'Path where verdaccio data file is located')
+.option('-s, --save', 'Save the package list to file')
+.action(async function (input, verdaccioPath, options) {
+    // 设置配置
+    config.inputPath = input;
+    config.verdaccioStorageJsonPath = verdaccioPath;
+    
+    // 获取符合verdaccio发布的包的名字
+    const packageArr = getAllPackagesName(config.inputPath, options.save);
+    
+    // 同步包到verdaccio storage
+    syncPackages(packageArr);
+});
 
 // 检查是否提供了必要的参数
 if (process.argv && process.argv.length < 3) {
