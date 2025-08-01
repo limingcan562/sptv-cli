@@ -1,34 +1,26 @@
 #!/usr/bin/env node
 
 // import fs from 'fs/promises';
-import { program } from 'commander';
+import { program, Command, Option } from 'commander';
 import config from './src/config.js';
 import chalk from 'chalk';
 import copyPackages from './src/copyPackages.js';
 import getAllPackagesName from './src/getAllPackagesName.js'
 import syncPackages from './src/syncPackages.js';
-import path from 'path'
+
+// 配置 Commander.js
+program.enablePositionalOptions();
 
 // 配置命令行参数
 program
 .name(config.pkg.name)
-.option('-i, --input [path]', 'To be copied source path')
-.option('-d, --destination-path [path]', 'verdaccio storage directory')
+.requiredOption('-i, --input <path>', 'To be copied source path')
+.requiredOption('-d, --destination-path <path>', 'verdaccio storage directory')
 .option('-j, --verdaccio-db-json-path [path]', `Path where file ${config.verdaccioDataName} is located`)
 .option('-s, --save', 'Output the obtained package name')
 .version(config.logo, '-v', 'View current version')
 .description(chalk.magenta(`=================================================\n>>>>> ${config.pkg.description} <<<<<< \n=================================================`))
 .action(async options => {
-    // console.log(options, 1);
-
-    if (options.input === true || !options.input) {
-        console.log(chalk.red('"-i" or "--input" is required'));
-        return;
-    } else if (options.destinationPath === true || !options.destinationPath) {
-        console.log(chalk.red('"-d" or "--destination" is required'));
-        return;
-    }
-    
     config.inputPath = options.input;
     config.verdaccioStorageJsonPath = options.verdaccioDbJsonPath || options.destinationPath;
 
@@ -43,7 +35,17 @@ program
     syncPackages(config.verdaccioStorageJsonPath, packageArr);
 });
 
+// 拷贝某目录到目标目录
+const copyDirCommand = new Command('copy-dir')
+.description('Copy directory')
+.requiredOption('-i, --input <path>', 'To be copied source path')
+.requiredOption('-d, --destination-path <path>', 'Destination directory')
+.action(async function (options) {
+    // 复制文件夹
+    copyPackages(options.input, options.destinationPath);
+});
 
+program.addCommand(copyDirCommand);
 
 // 检查是否提供了必要的参数
 if (process.argv && process.argv.length < 3) {
@@ -51,4 +53,4 @@ if (process.argv && process.argv.length < 3) {
 }
     
 // 解析命令行参数
-program.parse(process.argv);
+program.parse();
