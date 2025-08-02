@@ -122,7 +122,9 @@ export default (rootDir, save) => {
         return resultPaths;
         
     } catch (err) {
-        spinner.fail(chalk.red(err));
+        // spinner.fail(chalk.red(err));
+        spinner.stop();
+        throw err; // 重新抛出错误，让调用者能够捕获
     }
 
 }

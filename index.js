@@ -7,6 +7,9 @@ import chalk from 'chalk';
 import copyPackages from './src/copyPackages.js';
 import getAllPackagesName from './src/getAllPackagesName.js'
 import syncPackages from './src/syncPackages.js';
+import ora from 'ora';
+
+const spinner = ora('');
 
 // 配置 Commander.js
 program.enablePositionalOptions();
@@ -14,30 +17,29 @@ program.enablePositionalOptions();
 // 配置命令行参数
 program
 .name(config.pkg.name)
-.option('-i, --input <path>', 'To be copied source path')
+.option('-i, --input <path>', 'To be copied source path', process.cwd())
 .option('-d, --destination-path <path>', 'verdaccio storage directory')
 .option('-j, --verdaccio-db-json-path [path]', `Path where file ${config.verdaccioDataName} is located`)
 .option('-s, --save', 'Output the obtained package name')
 .version(config.logo, '-v', 'View current version')
 .description(chalk.magenta(`=================================================\n>>>>> ${config.pkg.description} <<<<<< \n=================================================`))
 .action(async options => {
-    // if (!options.input || !options.destinationPath) {
-    //     console.error(chalk.red('Error: Both input (-i) and destination (-d) paths are required for main command'));
-    //     console.error(chalk.yellow('Usage: sptv-cli -i <source> -d <destination> [options]'));
-    //     process.exit(1);
-    // }
-    
     config.inputPath = options.input;
     config.verdaccioStorageJsonPath = options.verdaccioDbJsonPath || options.destinationPath;
 
-    // 复制包到verdaccio storage
-    copyPackages(options.input, options.destinationPath);
+    try {
+        // 复制包到verdaccio storage
+        copyPackages(options.input, options.destinationPath);
 
-    // 获取符合verdaccio发布的包的名字
-    const packageArr = getAllPackagesName(config.inputPath, options.save);
+        // 获取符合verdaccio发布的包的名字
+        const packageArr = getAllPackagesName(config.inputPath, options.save);
 
-    // 同步包到verdaccio storage
-    syncPackages(packageArr);
+        // 同步包到verdaccio storage
+        await syncPackages(packageArr);
+    } catch (error) {
+        spinner.fail(chalk.red(error));
+        process.exit(1);
+    }
 });
 
 // 拷贝某目录到目标目录
@@ -47,8 +49,13 @@ program
 .argument('<input>', 'To be copied source path')
 .argument('<destination>', 'Destination directory')
 .action(async function (input, destination) {
-    // 复制文件夹
-    copyPackages(input, destination);
+    try {
+        // 复制文件夹
+        copyPackages(input, destination);
+    } catch (error) {
+        spinner.fail(chalk.red(error));
+        process.exit(1);
+    }
 });
 
 // 同步包到 verdaccio
@@ -62,12 +69,17 @@ program
     // 设置配置
     config.inputPath = input;
     config.verdaccioStorageJsonPath = verdaccioPath;
-    
-    // 获取符合verdaccio发布的包的名字
-    const packageArr = getAllPackagesName(config.inputPath, options.save);
-    
-    // 同步包到verdaccio storage
-    syncPackages(packageArr);
+
+    try {
+        // 获取符合verdaccio发布的包的名字
+        const packageArr = getAllPackagesName(config.inputPath, options.save);
+            
+        // 同步包到verdaccio storage
+        syncPackages(packageArr);
+    } catch (error) {
+        spinner.fail(chalk.red(error));
+        process.exit(1);
+    }
 });
 
 // 检查是否提供了必要的参数

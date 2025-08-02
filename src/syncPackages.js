@@ -31,6 +31,8 @@ export default async (packageArr) => {
         console.log('');
         
     } catch (error) {
-        spinner.fail(chalk.red(error));
+        // spinner.fail(chalk.red(error));
+        spinner.stop();
+        throw error; // 重新抛出错误，让调用者能够捕获
     }
 }

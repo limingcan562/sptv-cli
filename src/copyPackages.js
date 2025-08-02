@@ -20,6 +20,8 @@ export default (inputSrc, outputSrc) => {
         spinner.succeed(chalk.green(chalk.bold(`Copy completed!`)));
         console.log('');
     } catch (err) {
-        spinner.fail(chalk.red(err));
+        // spinner.fail(chalk.red(err));
+        spinner.stop();
+        throw err; // 重新抛出错误，让调用者能够捕获
     }
 }
