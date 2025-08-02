@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 // import fs from 'fs/promises';
-import { program, Command, Option } from 'commander';
-import config from './src/config.js';
+import { program } from 'commander';
 import chalk from 'chalk';
-import copyPackages from './src/copyPackages.js';
-import getAllPackagesName from './src/getAllPackagesName.js'
-import syncPackages from './src/syncPackages.js';
 import ora from 'ora';
+
+import config from './core/config.js';
+import copyPackages from './core/copyPackages.js';
+import getAllPackagesName from './core/getAllPackagesName.js'
+import syncPackages from './core/syncPackages.js';
 
 const spinner = ora('');
 

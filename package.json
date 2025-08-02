@@ -2,12 +2,12 @@
   "name": "sptv-cli",
   "version": "1.0.0",
   "bin": {
-    "sptv-cli": "index.js"
+    "sptv-cli": "./src/index.js"
   },
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm link"
   },
   "keywords": [
     "verdaccio", 
