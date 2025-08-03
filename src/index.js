@@ -63,8 +63,8 @@ program
 program
 .command('sync')
 .description('Sync packages to verdaccio')
-.argument('<input>', 'Source directory containing packages')
-.argument('<verdaccio-path>', 'Path where verdaccio data file is located')
+.argument('[input]', 'Source directory containing packages', process.cwd())
+.argument('[verdaccio-path]', 'Path where verdaccio data file is located', process.cwd())
 .option('-s, --save', 'Save the package list to file')
 .action(async function (input, verdaccioPath, options) {
     // 设置配置
@@ -76,7 +76,7 @@ program
         const packageArr = getAllPackagesName(config.inputPath, options.save);
             
         // 同步包到verdaccio storage
-        syncPackages(packageArr);
+        syncPackages(packageArr, this.name());
     } catch (error) {
         spinner.fail(chalk.red(error));
         process.exit(1);
