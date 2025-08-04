@@ -12,6 +12,25 @@
 
 SPTV-CLI is a powerful command-line tool designed to synchronize packages to Verdaccio registry. It provides multiple commands for copying directories, scanning packages, and syncing them to Verdaccio storage. This tool is designed to work with **Verdaccio v6.1.6** for optimal compatibility.
 
+### 🔴 Common Issues with Verdaccio Usage
+
+1. **Manual Publishing Complexity**: Each package needs to be manually published to Verdaccio via `npm publish`, which becomes overwhelming with large numbers of packages
+2. **Complex Dependencies**: Packages may have complex interdependencies, making manual publishing prone to missing dependent packages
+3. **Version Management Difficulties**: Hard to ensure package versions in internal Verdaccio match those in external networks
+4. **Repetitive Work**: Every project update requires re-publishing all related packages manually
+5. **High Error Rate**: Manual operations are error-prone, potentially causing package publishing failures or version inconsistencies
+6. **Low Efficiency**: The entire process is time-consuming and labor-intensive, affecting development efficiency
+
+### ✅ Problems Solved by sptv-cli
+
+1. **Automated Synchronization**: One-click automatic synchronization of external packages to internal Verdaccio, eliminating manual publishing
+2. **Intelligent Dependency Scanning**: Automatically scans and identifies package dependencies, ensuring all dependent packages are synchronized
+3. **Batch Processing**: Supports batch processing of multiple packages, greatly improving synchronization efficiency
+4. **Version Consistency**: Ensures package versions in internal Verdaccio are completely consistent with external networks
+5. **Error Handling**: Provides comprehensive error handling mechanisms to ensure synchronization process stability
+6. **Progress Visualization**: Real-time display of synchronization progress, keeping users informed of operation status
+7. **Flexible Configuration**: Supports multiple configuration options to adapt to different usage scenarios
+
 ## ✨ Features
 
 - **Package Synchronization**: Automatically sync packages to Verdaccio registry
@@ -73,8 +92,25 @@ sptv-cli copy <source-directory> <destination-directory>
 Sync packages to Verdaccio without copying.
 
 ```bash
-sptv-cli sync <source-directory> <verdaccio-path> [-s]
+# Basic usage (uses current directory for both input and verdaccio path)
+sptv-cli sync
+
+# Specify source directory only
+sptv-cli sync <source-directory>
+
+# Specify both source and verdaccio path
+sptv-cli sync <source-directory> <verdaccio-path>
+
+# With save option
+sptv-cli sync <source-directory> <verdaccio-path> -s
 ```
+
+**Arguments:**
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `input` | Source directory containing packages | Current directory |
+| `verdaccio-path` | Path where verdaccio data file is located | Current directory |
 
 **Options:**
 
@@ -94,7 +130,10 @@ sptv-cli -i ./packages -d ./verdaccio-storage -j ./verdaccio-storage
 # Only copy directory
 sptv-cli copy ./src ./backup
 
-# Only sync to Verdaccio
+# Only sync to Verdaccio (using current directory)
+sptv-cli sync
+
+# Only sync to Verdaccio with specific paths
 sptv-cli sync ./packages ./verdaccio-storage -s
 ```
 

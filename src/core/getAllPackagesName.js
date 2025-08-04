@@ -3,7 +3,6 @@ import fs from 'fs-extra'
 import ora from 'ora';
 import chalk from 'chalk';
 import path from 'path';
-import config from './config.js';
 
 
 // 存储结果的数组
@@ -58,35 +57,6 @@ function searchFolders(currentPath) {
     }
 }
 
-
-
-/**
- * 保存结果到JS文件（数组形式）
- */
-function saveResultsToFile() {
-    const outputFilePath = path.join(config.logDir, config.logName);
-    // 构建TXT内容，包含统计信息和路径列表
-    const date = new Date();
-    let content = `-------- Folder search results --------\n`;
-    content += `creation time: ${date.toLocaleString()}\n`;
-    content += `Search root directory: ${searchRoot}\n`;
-    content += `Total number of processed folders: ${totalFoldersProcessed}\n`;
-    content += `Number of eligible folders: ${resultPaths.length}\n\n`;
-    // content += '-------------------------------------\n\n';
-    content += `-------- List of eligible folder paths --------\n`;
-    resultPaths.forEach((folderPath, index) => {
-        content += `${index + 1}. ${folderPath}\n`;
-    });
-    
-    try {
-        fs.writeFileSync(outputFilePath, content, 'utf8');
-        return outputFilePath;
-    } catch (err) {
-        throw `Failed to save result file: ${err.message}`;
-    }
-}
-
-
 // 开始执行
 export default (rootDir, save) => {
     searchRoot = path.resolve(rootDir);
@@ -111,14 +81,6 @@ export default (rootDir, save) => {
         //     console.log(`${index + 1}. ${path}`);
         // });
         
-        // 保存结果
-        if (save) {
-            const savedPath = saveResultsToFile();
-            if (savedPath) {
-                console.log(`\n${chalk.green('The results have been saved to:')} ${savedPath}`);
-            }
-        }
-
         return resultPaths;
         
     } catch (err) {
