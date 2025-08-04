@@ -13,7 +13,14 @@
     "verdaccio", 
     "cli",
     "json",
-    "node"
+    "node",
+    "npm",
+    "pnpm"
+  ],
+  "files": [
+    "src",
+    "README_CN.md",
+    "README.md"
   ],
   "author": "",
   "license": "ISC",

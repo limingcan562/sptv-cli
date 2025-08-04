@@ -33,10 +33,10 @@ program
         copyPackages(options.input, options.destinationPath);
 
         // 获取符合verdaccio发布的包的名字
-        const packageArr = getAllPackagesName(config.inputPath, options.save);
+        const packageArr = getAllPackagesName(config.inputPath);
 
         // 同步包到verdaccio storage
-        await syncPackages(packageArr);
+        syncPackages(packageArr, '', options.save);
     } catch (error) {
         spinner.fail(chalk.red(error));
         process.exit(1);
@@ -73,10 +73,10 @@ program
 
     try {
         // 获取符合verdaccio发布的包的名字
-        const packageArr = getAllPackagesName(config.inputPath, options.save);
+        const packageArr = getAllPackagesName(config.inputPath);
             
         // 同步包到verdaccio storage
-        syncPackages(packageArr, this.name());
+        syncPackages(packageArr, this.name(), options.save);
     } catch (error) {
         spinner.fail(chalk.red(error));
         process.exit(1);
