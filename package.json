@@ -1,6 +1,6 @@
 {
   "name": "sptv-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": {
     "sptv-cli": "./src/index.js"
   },
@@ -19,6 +19,7 @@
   ],
   "files": [
     "src",
+    "media",
     "README_CN.md",
     "README.md"
   ],
