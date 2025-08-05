@@ -1,50 +1,43 @@
 # SPTV-CLI
 
-**Sync your npm packages to Verdaccio registry with ease**
+**Sync your npm packages to `verdaccio` with ease**
 
 [![npm version](https://img.shields.io/badge/npm-v1.0.0-blue.svg)](https://www.npmjs.com/package/sptv-cli)
 [![License](https://img.shields.io/badge/license-ISC-green.svg)](LICENSE)
-[![Verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)](https://verdaccio.org/)
+[![verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)](https://verdaccio.org/)
 
-[English](README.md) | [中文](README_CN.md)
+English | [中文](README_CN.md)
 
 ## 🎬 Demo Preview
 
-![sptv-cli Demo](https://github.com/your-username/sptv-cli/raw/main/demo.gif)
+![Usage effect](./media/effect_preview.gif)
 
-*Click the GIF above to view the complete demo*
+**`sptv-cli` allows you to focus only on maintaining your dependencies for both internal and external networks.** 👉🏻 [How to get internal network publishable packages](#📦-how-to-get-npm-dependency-packages)
 
 ## 📦 Overview
 
-SPTV-CLI is a powerful command-line tool designed to synchronize packages to Verdaccio registry. It provides multiple commands for copying directories, scanning packages, and syncing them to Verdaccio storage. This tool is designed to work with **Verdaccio v6.1.6** for optimal compatibility.
+In daily development, sometimes we work in environments with extremely high security requirements, which leads to the distinction between internal and external networks.
+
+In internal network development, we cannot use `npm` to install dependencies, which causes great difficulties for our web development. So we need to set up `verdaccio` in the internal network environment and sync packages used in external network projects to the `verdaccio` built in the internal network.
 
 ### 🔴 Common Issues with Verdaccio Usage
 
-1. **Manual Publishing Complexity**: Each package needs to be manually published to Verdaccio via `npm publish`, which becomes overwhelming with large numbers of packages
+In completely isolated internal and external network environments, we generally face the following issues when using `verdaccio`:
+
+1. **Manual Publishing Complexity**: Each package needs to be manually published to Verdaccio via `npm publish`, which becomes overwhelming with large numbers of packages, and publishing time is uncontrollable
 2. **Complex Dependencies**: Packages may have complex interdependencies, making manual publishing prone to missing dependent packages
 3. **Version Management Difficulties**: Hard to ensure package versions in internal Verdaccio match those in external networks
 4. **Repetitive Work**: Every project update requires re-publishing all related packages manually
-5. **High Error Rate**: Manual operations are error-prone, potentially causing package publishing failures or version inconsistencies
-6. **Low Efficiency**: The entire process is time-consuming and labor-intensive, affecting development efficiency
+5. **Low Efficiency**: The entire process is time-consuming and labor-intensive, affecting development efficiency
 
-### ✅ Problems Solved by sptv-cli
+### ✅ Problems Solved by `sptv-cli`
 
 1. **Automated Synchronization**: One-click automatic synchronization of external packages to internal Verdaccio, eliminating manual publishing
 2. **Intelligent Dependency Scanning**: Automatically scans and identifies package dependencies, ensuring all dependent packages are synchronized
 3. **Batch Processing**: Supports batch processing of multiple packages, greatly improving synchronization efficiency
 4. **Version Consistency**: Ensures package versions in internal Verdaccio are completely consistent with external networks
-5. **Error Handling**: Provides comprehensive error handling mechanisms to ensure synchronization process stability
-6. **Progress Visualization**: Real-time display of synchronization progress, keeping users informed of operation status
-7. **Flexible Configuration**: Supports multiple configuration options to adapt to different usage scenarios
-
-## ✨ Features
-
-- **Package Synchronization**: Automatically sync packages to Verdaccio registry
-- **Directory Copying**: Copy directories with progress indicators
-- **Package Scanning**: Scan directories for valid packages (containing package.json and .tgz files)
-- **Error Handling**: Comprehensive error handling with graceful failure
-- **Progress Indicators**: Beautiful CLI progress indicators and colored output
-- **Flexible Commands**: Multiple command options for different use cases
+5. **Progress Visualization**: Real-time display of synchronization progress, keeping users informed of operation status
+6. **Flexible Configuration**: Supports multiple configuration options to adapt to different usage scenarios
 
 ## 🚀 Installation
 
@@ -64,16 +57,13 @@ The main command performs a complete workflow: copy packages → scan for valid 
 
 ```bash
 # Basic usage (uses current directory as source)
-sptv-cli -d <destination-directory>
+sptv-cli -d <verdaccio storage directory>
 
 # Specify source directory
-sptv-cli -i <source-directory> -d <destination-directory>
-
-# With Verdaccio database path
-sptv-cli -i <source-directory> -d <destination-directory> -j <verdaccio-db-path>
+sptv-cli -i <source-directory> -d <verdaccio storage directory>
 
 # Save package list to file
-sptv-cli -i <source-directory> -d <destination-directory> -s
+sptv-cli -i <source-directory> -d <verdaccio storage directory> -s
 ```
 
 **Options:**
@@ -81,13 +71,12 @@ sptv-cli -i <source-directory> -d <destination-directory> -s
 | Option | Description | Default |
 |--------|-------------|---------|
 | `-i, --input <path>` | Source directory containing packages | Current directory |
-| `-d, --destination-path <path>` | Destination directory for copied packages | - |
-| `-j, --verdaccio-db-json-path <path>` | Path where .verdaccio-db.json is located | Destination path |
+| `-d, --destination-path <path>` | Verdaccio storage directory path | - |
 | `-s, --save` | Save package list to file | false |
 
 ### Copy Directory Command
 
-Copy a directory to another location.
+You can use the copy function to copy a directory to another location.
 
 ```bash
 sptv-cli copy <source-directory> <destination-directory>
@@ -95,28 +84,11 @@ sptv-cli copy <source-directory> <destination-directory>
 
 ### Sync Command
 
-Sync packages to Verdaccio without copying.
+If you find that there are packages in the verdaccio storage directory but they are not synced on `localhost:4873`, you can use the `sync` function in the verdaccio storage directory.
 
 ```bash
-# Basic usage (uses current directory for both input and verdaccio path)
-sptv-cli sync
-
-# Specify source directory only
-sptv-cli sync <source-directory>
-
-# Specify both source and verdaccio path
-sptv-cli sync <source-directory> <verdaccio-path>
-
-# With save option
-sptv-cli sync <source-directory> <verdaccio-path> -s
+sptv-cli sync <source-directory> <verdaccio storage directory> [-s]
 ```
-
-**Arguments:**
-
-| Argument | Description | Default |
-|----------|-------------|---------|
-| `input` | Source directory containing packages | Current directory |
-| `verdaccio-path` | Path where verdaccio data file is located | Current directory |
 
 **Options:**
 
@@ -124,25 +96,34 @@ sptv-cli sync <source-directory> <verdaccio-path> -s
 |--------|-------------|---------|
 | `-s, --save` | Save the package list to file | false |
 
-## 🔧 Examples
+## 📦 How to get npm dependency packages
 
-```bash
-# Copy and sync packages from current directory
-sptv-cli -d ./backup
+Here's a relatively good way for you to get npm dependency packages.
 
-# Copy and sync specific packages
-sptv-cli -i ./packages -d ./verdaccio-storage -j ./verdaccio-storage
+You need to set up `verdaccio` in an external network environment. Assuming you have already set up `verdaccio` and installed the `nrm` management tool:
 
-# Only copy directory
-sptv-cli copy ./src ./backup
+1. Create a new npm source:
 
-# Only sync to Verdaccio (using current directory)
-sptv-cli sync
+    ```bash
+    nrm add verdaccio http://localhost:4873
+    ```
 
-# Only sync to Verdaccio with specific paths
-sptv-cli sync ./packages ./verdaccio-storage -s
-```
+2. Set the npm source to `verdaccio`
+    ```bash
+    nrm use verdaccio
+    ```
 
-## 📄 License
+At this point, your npm usage will look like this:
+![alt text](./media/nrm.png)
 
-ISC License 
+When you use `npm` or `pnpm` to download dependencies, the corresponding packages will be cached in the `storage` directory of `verdaccio`, and you can get a series of dependency packages that meet the conditions for publishing:
+
+![packages](./media/packages.png)
+
+**Afterwards, you just need to focus on maintaining these packages and use `sptv-cli` to sync them to the internal network environment with one click**
+
+### 📢 Note
+
+If you find that packages are not cached in the verdaccio storage directory after using npm or pnpm to install dependencies, you can do the following before reinstalling:
+- `npm cache clean -f`
+- Delete the pnpm cache directory 

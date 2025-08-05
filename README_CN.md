@@ -4,19 +4,15 @@
 
 [![npm version](https://img.shields.io/badge/npm-v1.0.0-blue.svg)](https://www.npmjs.com/package/sptv-cli)
 [![License](https://img.shields.io/badge/license-ISC-green.svg)](LICENSE)
-[![verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)](https://`verdaccio`.org/)
+[![verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)](https://verdaccio.org/)
 
 [English](README.md) | 中文
 
 ## 🎬 效果预览
 
-如果你维护了一系列像这样的`npm`包：
-
-![packages](./media/packages.png)
-
-那么你只需要当前目录下执行`sptv-cli -d <verdaccio storage 所在目录>`，就可以轻松将你的这些包同步到`verdaccio`中：
-
 ![Usage effect](./media/effect_preview.gif)
+
+**`sptv-cli`让你只需要专注一维护好内外网的依赖包即可。** 👉🏻 [如何获得内网可发布的包](#📦-如何获取-npm-依赖包)
 
 ## 📦 概述
 
@@ -61,13 +57,13 @@ npm install -g sptv-cli
 
 ```bash
 # 基本用法（使用当前目录作为源）
-sptv-cli -d <verdaccio storage 目标目录>
+sptv-cli -d <verdaccio 的storage目录>
 
 # 指定源目录
-sptv-cli -i <源目录> -d <目标目录>
+sptv-cli -i <源目录> -d <verdaccio 的storage目录>
 
 # 输出同步后的信息
-sptv-cli -i <源目录> -d <目标目录> -s
+sptv-cli -i <源目录> -d <verdaccio 的storage目录> -s
 ```
 
 **选项:**
@@ -120,13 +116,14 @@ sptv-cli sync <源目录> <verdaccio storage路径> [-s]
 此时你的`npm`使用情况将会是以下这样：
 ![alt text](./media/nrm.png)
 
-当你使用`npm`或者`pnpm`下载依赖时，对应的包就会被缓存到`verdaccio`的`storage`目录下，你就可以得到像“效果预览”模块里的包。
+当你使用`npm`或者`pnpm`下载依赖时，对应的包就会被缓存到`verdaccio`的`storage`目录下，你就可以得到符合条件发布的一系列依赖包：
 
-后续你只要专注维护这些包，并同步到内网环境就可以了。
+![packages](./media/packages.png)
 
+**后续你只要专注维护这些包，并使用`sptv-cli`一建同步到内网环境就可以了**
 
 ### 📢注意
 
-当你用`npm`或者`pnpm`下载依赖后，发现包没有缓存到`verdaccio`的`storage`目录的话你可以进行一下操作后，再重新安装依赖：
+当你用`npm`或者`pnpm`下载依赖后，发现包没有缓存到`verdaccio`的`storage`目录的话，你可以进行以下操作后，再重新安装依赖：
 - `npm cache clean -f`
 - 删除掉`pnpm`的缓存目录
