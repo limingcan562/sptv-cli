@@ -12,7 +12,7 @@
 
 ![Usage effect](./media/effect_preview.gif)
 
-**`sptv-cli`让你只需要专注一维护好内外网的依赖包即可。** 👉🏻 [如何获得内网可发布的包](#📦-如何获取-npm-依赖包)
+**`sptv-cli`让你只需要专注一维护好内外网的依赖包即可。** 👉🏻 [如何获得内网可发布的包](#getPackages)
 
 ## 📦 概述
 
@@ -96,7 +96,7 @@ sptv-cli sync <源目录> <verdaccio storage路径> [-s]
 |------|------|--------|
 | `-s, --save` | 输出符合 `verdaccio`发布的包的名称信息 | false |
 
-## 📦 如何获取 `npm` 依赖包
+## <a id="getPackages">📦 如何获取 `npm` 依赖包</a> 
 
 这里有一个相对好的办法让你可以获取`npm`依赖包。
 

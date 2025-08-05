@@ -12,7 +12,7 @@ English | [中文](README_CN.md)
 
 ![Usage effect](./media/effect_preview.gif)
 
-**`sptv-cli` allows you to focus only on maintaining your dependencies for both internal and external networks.** 👉🏻 [How to get internal network publishable packages](#📦-how-to-get-npm-dependency-packages)
+**`sptv-cli` allows you to focus only on maintaining your dependencies for both internal and external networks.** 👉🏻 [How to get internal network publishable packages](#getPackages)
 
 ## 📦 Overview
 
@@ -96,7 +96,7 @@ sptv-cli sync <source-directory> <verdaccio storage directory> [-s]
 |--------|-------------|---------|
 | `-s, --save` | Save the package list to file | false |
 
-## 📦 How to get npm dependency packages
+## <a id="getPackages">📦 How to get npm dependency packages</a> 
 
 Here's a relatively good way for you to get npm dependency packages.
 
