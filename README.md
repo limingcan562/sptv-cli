@@ -8,6 +8,12 @@
 
 [English](README.md) | [中文](README_CN.md)
 
+## 🎬 Demo Preview
+
+![sptv-cli Demo](https://github.com/your-username/sptv-cli/raw/main/demo.gif)
+
+*Click the GIF above to view the complete demo*
+
 ## 📦 Overview
 
 SPTV-CLI is a powerful command-line tool designed to synchronize packages to Verdaccio registry. It provides multiple commands for copying directories, scanning packages, and syncing them to Verdaccio storage. This tool is designed to work with **Verdaccio v6.1.6** for optimal compatibility.
