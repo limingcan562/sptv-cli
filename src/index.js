@@ -19,14 +19,13 @@ program.enablePositionalOptions();
 program
 .name(config.pkg.name)
 .option('-i, --input <path>', 'To be copied source path', process.cwd())
-.option('-d, --destination-path <path>', 'verdaccio storage directory')
-.option('-j, --verdaccio-db-json-path [path]', `Path where file ${config.verdaccioDataName} is located`)
+.option('-d, --destination-path <path>', 'verdaccio storage directory path')
 .option('-s, --save', 'Output the obtained package name')
 .version(config.logo, '-v', 'View current version')
 .description(chalk.magenta(`=================================================\n>>>>> ${config.pkg.description} <<<<<< \n=================================================`))
 .action(async options => {
     config.inputPath = options.input;
-    config.verdaccioStorageJsonPath = options.verdaccioDbJsonPath || options.destinationPath;
+    config.verdaccioStorageJsonPath = options.destinationPath;
 
     try {
         // 复制包到verdaccio storage
@@ -36,7 +35,7 @@ program
         const packageArr = getAllPackagesName(config.inputPath);
 
         // 同步包到verdaccio storage
-        syncPackages(packageArr, '', options.save);
+        syncPackages(packageArr, options.save);
     } catch (error) {
         spinner.fail(chalk.red(error));
         process.exit(1);
@@ -76,7 +75,7 @@ program
         const packageArr = getAllPackagesName(config.inputPath);
             
         // 同步包到verdaccio storage
-        syncPackages(packageArr, this.name(), options.save);
+        syncPackages(packageArr, options.save);
     } catch (error) {
         spinner.fail(chalk.red(error));
         process.exit(1);

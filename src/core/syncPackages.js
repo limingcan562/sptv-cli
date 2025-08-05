@@ -20,7 +20,7 @@ function saveResultsToFile(searchRoot, packageArr) {
     content += `Search root directory: ${searchRoot}\n`;
     content += `Number of eligible folders: ${packageArr.length}\n`;
     content += `Number of packages released verdaccio: ${releasedPackage.length}\n`;
-    content += `The package released by verdaccio: ${noReleasedPackage.length}\n\n`;
+    content += `Number of newly released packages for verdaccio: ${noReleasedPackage.length}\n\n`;
     // content += '-------------------------------------\n\n';
     content += `-------- List of packages published by verdaccio --------\n`;
 
@@ -30,7 +30,9 @@ function saveResultsToFile(searchRoot, packageArr) {
     
     try {
         fs.writeFileSync(outputFilePath, content, 'utf8');
-        return outputFilePath;
+        // return outputFilePath;
+        console.log(`\n${chalk.green('The results have been saved to:\n  ')} ${outputFilePath}`);
+        console.log('');
     } catch (err) {
         throw `Failed to save result file: ${err.message}`;
     }
@@ -38,7 +40,7 @@ function saveResultsToFile(searchRoot, packageArr) {
 
 
 
-export default (packageArr, commandName, save) => {
+export default (packageArr, save) => {
     console.log('');
     console.log(`${chalk.cyan('============= Synchronize package to verdaccio =============')}`);
     const spinner = ora('Start syncing...').start();
@@ -47,25 +49,22 @@ export default (packageArr, commandName, save) => {
     try {
         // 判断verdaccio的数据文件存不存在
         if (!fs.existsSync(dPath)) {
-            const _jPathText = `\n  Please use ${chalk.bold('-j')} to pass in the directory where ${chalk.bold(config.verdaccioDataName)} is located.`
-
-            throw `${chalk.bold('Synchronization failed!')}\n  The ${chalk.bold(config.verdaccioDataName)} file does not exist.${!commandName ? _jPathText : ''}`;
+            throw `${chalk.bold('Synchronization failed!')}\n  The ${chalk.bold(config.verdaccioDataName)} file does not exist.\n  Please check if the path to the verdaccio storage directory is correct.`;
         }
 
         const fileContent = fs.readFileSync(dPath, 'utf8');
 
         // 解析为JSON对象
         const data = JSON.parse(fileContent);
-
+        
         // 只添加原本list里没有的包
         if (data.list) {
+            releasedPackage = [...data.list];
+
             packageArr.forEach(item => {
                 if (!data.list.includes(item)) {
                     noReleasedPackage.push(item);
                     data.list.push(item);
-                    
-                } else {
-                    releasedPackage.push(item);
                 }
             });
         } else {
@@ -73,18 +72,21 @@ export default (packageArr, commandName, save) => {
             noReleasedPackage = packageArr;
         }
 
-        // 保存结果
-        if (save) {
-            const savedPath = saveResultsToFile(config.inputPath, packageArr);
-            if (savedPath) {
-                console.log(`\n${chalk.green('The results have been saved to:')} ${savedPath}`);
-            }
-        }
-
         // 将修改后的内容写回文件
         fs.writeFileSync(dPath, JSON.stringify(data, null, 2), 'utf8');
         spinner.succeed(chalk.green(chalk.bold('Synchronization complete!')));
-        console.log(chalk.bgGreenBright('You can now restart your verdaccio service!'));
+
+        // 保存结果
+        if (save) {
+            saveResultsToFile(config.inputPath, packageArr);
+        }
+
+        if (noReleasedPackage.length > 0) {
+            console.log(chalk.bgGreenBright('You can now restart your verdaccio service!'));
+        } else {
+            console.log(chalk.yellow('verdaccio has no packages available for release.'));
+        }
+
         console.log('');
         
     } catch (error) {

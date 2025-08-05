@@ -58,7 +58,7 @@ function searchFolders(currentPath) {
 }
 
 // 开始执行
-export default (rootDir, save) => {
+export default rootDir => {
     searchRoot = path.resolve(rootDir);
 
     console.log('');
