@@ -2,9 +2,9 @@
 
 **轻松将 npm 包同步到 `verdaccio`**
 
-[![npm version](https://img.shields.io/badge/npm-v1.0.0-blue.svg)](https://www.npmjs.com/package/sptv-cli)
-[![License](https://img.shields.io/badge/license-ISC-green.svg)](LICENSE)
-[![verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)](https://verdaccio.org/)
+![npm](https://img.shields.io/npm/v/sptv-cli?logo=npm)
+![license](https://img.shields.io/npm/l/sptv-cli)
+![verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)
 
 [English](README.md) | 中文
 
@@ -26,10 +26,10 @@
 在内外网完全隔离的环境下，我们使用``verdaccio``一般会有以下弊端：
 
 1. **手动发布繁琐**：需要将每个包通过 `npm publish` 手动发布到 `verdaccio`，包数量多时工作量巨大，且发布时间不可控
-2. **依赖关系复杂**：包之间可能存在复杂的依赖关系，手动发布容易遗漏依赖包
-3. **版本管理困难**：难以确保内网 `verdaccio` 中的包版本与外网保持一致
+2. `verdaccio`不一定会显示你已经存在的包，体验很差
+3. **依赖关系复杂**：包之间可能存在复杂的依赖关系，手动发布容易遗漏依赖包
 4. **重复性工作**：每次项目更新都需要重新手动发布所有相关包
-6. **效率低下**：整个过程耗时耗力，影响开发效率
+5. **效率低下**：整个过程耗时耗力，影响开发效率
 
 ### ✅ `sptv-cli` 解决的问题
 

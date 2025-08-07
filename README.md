@@ -2,9 +2,9 @@
 
 **Sync your npm packages to `verdaccio` with ease**
 
-[![npm version](https://img.shields.io/badge/npm-v1.0.0-blue.svg)](https://www.npmjs.com/package/sptv-cli)
-[![License](https://img.shields.io/badge/license-ISC-green.svg)](LICENSE)
-[![verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)](https://verdaccio.org/)
+![npm](https://img.shields.io/npm/v/sptv-cli?logo=npm)
+![license](https://img.shields.io/npm/l/sptv-cli)
+![verdaccio](https://img.shields.io/badge/verdaccio-v6.1.6-orange.svg)
 
 English | [中文](README_CN.md)
 
@@ -24,12 +24,13 @@ In internal network development, we cannot use `npm` to install dependencies, wh
 
 In completely isolated internal and external network environments, we generally face the following issues when using `verdaccio`:
 
-1. **Manual Publishing Complexity**: Each package needs to be manually published to Verdaccio via `npm publish`, which becomes overwhelming with large numbers of packages, and publishing time is uncontrollable
-2. **Complex Dependencies**: Packages may have complex interdependencies, making manual publishing prone to missing dependent packages
-3. **Version Management Difficulties**: Hard to ensure package versions in internal Verdaccio match those in external networks
-4. **Repetitive Work**: Every project update requires re-publishing all related packages manually
-5. **Low Efficiency**: The entire process is time-consuming and labor-intensive, affecting development efficiency
+1. **Manual publishing is cumbersome**: Each package must be manually published to `verdaccio` using `npm publish`. When there are many packages, the workload is enormous, and the publication time is unpredictable.
+2. `verdaccio` may not display packages that already exist, resulting in a poor user experience
+3. **Complex dependency relationships**: Packages may have complex dependency relationships, and manual publishing is prone to omitting dependent packages
+4. **Repetitive work**: Every project update requires manually republishing all related packages
+5. **Low efficiency**: The entire process is time-consuming and labor-intensive, impacting development efficiency
 
+Translated with DeepL.com (free version)
 ### ✅ Problems Solved by `sptv-cli`
 
 1. **Automated Synchronization**: One-click automatic synchronization of external packages to internal Verdaccio, eliminating manual publishing
