@@ -10,7 +10,7 @@
 
 ## 🎬 效果预览
 
-![Usage effect](./media/effect_preview.gif)
+![Usage effect](https://raw.githubusercontent.com/limingcan562/sptv-cli/refs/heads/main/media/effect_preview.gif)
 
 **`sptv-cli`让你只需要专注一维护好内外网的依赖包即可。** 👉🏻 [如何获得内网可发布的包](#getPackages)
 
@@ -114,11 +114,11 @@ sptv-cli sync <源目录> <verdaccio storage路径> [-s]
     ```
 
 此时你的`npm`使用情况将会是以下这样：
-![alt text](./media/nrm.png)
+![alt text](https://raw.githubusercontent.com/limingcan562/sptv-cli/refs/heads/main/media/nrm.png)
 
 当你使用`npm`或者`pnpm`下载依赖时，对应的包就会被缓存到`verdaccio`的`storage`目录下，你就可以得到符合条件发布的一系列依赖包：
 
-![packages](./media/packages.png)
+![packages](https://raw.githubusercontent.com/limingcan562/sptv-cli/refs/heads/main/media/packages.png)
 
 **后续你只要专注维护这些包，并使用`sptv-cli`一建同步到内网环境就可以了**
 

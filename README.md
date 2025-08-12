@@ -10,7 +10,8 @@ English | [中文](README_CN.md)
 
 ## 🎬 Demo Preview
 
-![Usage effect](./media/effect_preview.gif)
+![Usage effect](https://raw.githubusercontent.com/limingcan562/sptv-cli/refs/heads/main/media/effect_preview.gif)
+
 
 **`sptv-cli` allows you to focus only on maintaining your dependencies for both internal and external networks.** 👉🏻 [How to get internal network publishable packages](#getPackages)
 
@@ -115,11 +116,13 @@ You need to set up `verdaccio` in an external network environment. Assuming you 
     ```
 
 At this point, your npm usage will look like this:
-![alt text](./media/nrm.png)
+![alt text](https://raw.githubusercontent.com/limingcan562/sptv-cli/refs/heads/main/media/nrm.png)
+
 
 When you use `npm` or `pnpm` to download dependencies, the corresponding packages will be cached in the `storage` directory of `verdaccio`, and you can get a series of dependency packages that meet the conditions for publishing:
 
-![packages](./media/packages.png)
+![packages](https://raw.githubusercontent.com/limingcan562/sptv-cli/refs/heads/main/media/packages.png)
+
 
 **Afterwards, you just need to focus on maintaining these packages and use `sptv-cli` to sync them to the internal network environment with one click**
 
