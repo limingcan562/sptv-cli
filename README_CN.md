@@ -84,11 +84,18 @@ sptv-cli copy <源目录> <目标目录>
 
 ### 同步命令
 
-如果你发现verdaccio storage目录下有包，但是`localhost:4783`并没有同步，你可以在verdaccio storage目录下使用`sync`功能
+如果你发现verdaccio storage目录下有包，但是`localhost:4783`并没有同步，你可以在**verdaccio storage目录**下使用`sync`功能
 
 ```bash
-sptv-cli sync <源目录> <verdaccio storage路径> [-s]
+sptv-cli sync
 ```
+
+或者指定”源目录“跟目标目录：
+
+```bash
+sptv-cli sync <源目录> <verdaccio storage路径>
+```
+
 
 **选项:**
 

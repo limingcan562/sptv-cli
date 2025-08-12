@@ -86,11 +86,18 @@ sptv-cli copy <source-directory> <destination-directory>
 
 ### Sync Command
 
-If you find that there are packages in the verdaccio storage directory but they are not synced on `localhost:4873`, you can use the `sync` function in the verdaccio storage directory.
+If you find that there are packages in the verdaccio storage directory but they are not synced on `localhost:4873`, you can use the `sync` function in the **verdaccio storage directory**.
 
 ```bash
-sptv-cli sync <source-directory> <verdaccio storage directory> [-s]
+sptv-cli sync
 ```
+
+Or specify the “source directory” and target directory:
+
+```bash
+sptv-cli sync <source-directory> <verdaccio storage directory>
+```
+
 
 **Options:**
 
