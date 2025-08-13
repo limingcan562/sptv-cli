@@ -31,7 +31,7 @@ In completely isolated internal and external network environments, we generally 
 4. **Repetitive work**: Every project update requires manually republishing all related packages
 5. **Low efficiency**: The entire process is time-consuming and labor-intensive, impacting development efficiency
 
-Translated with DeepL.com (free version)
+
 ### ✅ Problems Solved by `sptv-cli`
 
 1. **Automated Synchronization**: One-click automatic synchronization of external packages to internal Verdaccio, eliminating manual publishing
@@ -40,6 +40,8 @@ Translated with DeepL.com (free version)
 4. **Version Consistency**: Ensures package versions in internal Verdaccio are completely consistent with external networks
 5. **Progress Visualization**: Real-time display of synchronization progress, keeping users informed of operation status
 6. **Flexible Configuration**: Supports multiple configuration options to adapt to different usage scenarios
+
+**`SPTV-CLI` allows you to focus solely on managing your packages.**
 
 ## 🚀 Installation
 
